@@ -1,0 +1,1 @@
+Here is the project written in C++, I wrote it to see if it would help us write it in Haskell, but probably not since it's completely different. Also, this algorithm is pretty simple, it just keeps adding students to unique groups. By the end of the assignments, it fails to put some students in groups though. It's almost like we need to run through 2 passes or something.
