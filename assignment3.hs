@@ -23,6 +23,18 @@ main = do
    print groupSize
 
    -- Calculate groups for each assignment.
+   
+   --Possible way to do this?
+   --1. in a for loop, create a list for each student to store who they have already worked with
+   
+   --2. Calcluate all possible combinations (permutation(students, groupSize)??)
+   
+   --3. If the possible combos > number of projects
+   --     create groups for all projects (when deciding who is in which group, compare if that person is in any of the
+   --                                     previous people's "worked with before" list to see if they can be added to the group).
+   
+   --   else print "not possible", return()
+   
    {-|
       There are a few possible algorithms we could use:
          Have a list associated with each student, containing all of the students they already worked with.
