@@ -2,7 +2,7 @@
    Usage:          ./assignment3 students groupSize
    Project:        Assignment 3
    Class:          CMSC 331 Fall 2014
-   Authors:        Eric Hebert, Katie Swanson, 
+   Authors:        Eric Hebert, Katie Swanson, John Gordon 
    Description:    Calculates unique groups of student IDs.
 -}
 
