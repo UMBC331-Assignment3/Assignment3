@@ -2,7 +2,7 @@
    Usage:          ./assignment3 students groupSize
    Project:        Assignment 3
    Class:          CMSC 331 Fall 2014
-   Authors:        Eric Hebert, Katie Swanson, 
+   Authors:        Eric Hebert, Katie Swanson, John Gordon, Anna Taylor
    Description:    Calculates unique groups of student IDs.
 -}
 
@@ -11,11 +11,29 @@ import System.IO
 import Data.List
 import qualified Data.Set as Set
 
+{-|
+   New algorithm:
+      Generate all possible combinations
+         Make sure these are unique and there are no conlicts
+      Iterate through the combinations, and try to insert each group into an assignment.
+         If there are conflicts, try the next assignment.
+      Print results lists.
+-}
+
+-- Used for generating unique combinations with combo
+-- Second parameter would be a list of lists, to keep track of students who were already in groups together
+--checkConflict :: [Int] -> [[Int]] -> [Int]
+--checkConflict xs students = ???
+checkConflict :: [a] -> [a]
+checkConflict xs = xs
+
 -- Returns unique combinations, gotten from class
-combo :: Integer -> [a] -> [[a]]
+-- TODO: Make sure this returns only unique combinations using a filter or something.
+--    Will need to keep track of this using a list of lists.
+combo :: Int -> [a] -> [[a]]
 combo 0 _ = [[]]
 combo n [] = []
-combo n (x:xs) = (map (x:) $ combo (n-1) xs) ++ combo n xs
+combo n (x:xs) = (checkConflict (map (x:) $ combo (n-1) xs)) ++ combo n xs
 
 --Returns 1 if was inserted into assignment, 0 if needs to be deleted (not sure how to implement, wrote algorithm out)
 --whatToDo :: Set -> Set -> Integer
@@ -26,18 +44,29 @@ combo n (x:xs) = (map (x:) $ combo (n-1) xs) ++ combo n xs
 --Else add into a1
 --whatToDo
 
+-- Tries to insert a group into the results
+--insertGroup group = ???
+
+-- Checks if a list intersects with another list (we may not need this because we are using sets)
+intersect xs ys = length [x | x <- xs, elem x ys]
+
+-- Define a set type
+type Set a = a -> Bool
 
 main = do
    -- Read command line arguments
    args <- getArgs
-   let students = read (head args) :: Integer
-   let groupSize = read (last args) :: Integer
+   let students = read (head args) :: Int
+   let groupSize = read (last args) :: Int
 
    -- Print command line input (for debugging only)
    putStr "Students: "
    print students
    putStr "Group size: "
    print groupSize
+
+   let allCombinations = (Set.fromList $ combo groupSize [1..students])
+   print allCombinations
 
 -- let a1, a2, a3, a4, a5, a6, a7, a8 = Set
 -- let numCombos = length (combo groupSize [1..students])
@@ -56,11 +85,3 @@ main = do
 --	putStr "this is not possible"
    
    return ()
-   
-   {-|
-      There are a few possible algorithms we could use:
-         Have a list associated with each student, containing all of the students they already worked with.
-            Then, while the students are being grouped together, it would ensure nobody is in the same group.
-         Calculate all possible combinations of groups, then figure out a way to split them between assignments.
-            The second part of this may be difficult.
-   -}
